@@ -1,0 +1,32 @@
+<%= @link.title %><br>
+<%= @link.url %><br>
+<a href=<%= edit_link_url(@link.id)%>>Edit Link</a>
+
+<a href=<%= links_url %>>Links</a>
+<hr>
+<h2>Comments</h2><br>
+<% unless @comments.nil? %>
+<% @link.comments.each do |comment| %>
+<%= comment.user.username %><br>
+<%= comment.body %><br>
+<% if current_user.id == comment.user_id %>
+<form action="<%= comment_url(comment.id) %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="_method" value="delete">
+  <input type="hidden" name="link_id" value="<%= @link.id %>">
+  <input type="submit" value="Remove Comment">
+</form>
+<% end %>
+<br><br>
+<%end%>
+<% end %>
+<hr>
+Add Comment
+<form action="<%= comments_url %>" method="post">
+  <%= auth_token %>
+  <input type="hidden" name="link_id" value="<%= @link.id %>">
+  <label>Comment:
+    <input type="text" name="comment[body]">
+  </label>
+  <input type="submit" value="Add Comment">
+</form>

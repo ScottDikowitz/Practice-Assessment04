@@ -1,0 +1,10 @@
+<h1>Links Index</h1>
+<br>
+<% @links.each do |link| %>
+<a href=<%=link_url(link.id)%>><%= link.title %></a>
+<br>
+<%= link.url %>
+<br>
+<% end %>
+<hr>
+<a href="<%= new_link_url %>">New Link</a>
